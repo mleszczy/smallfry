@@ -12,6 +12,14 @@ import argparse
 import numpy as np
 import getpass
 
+def save_embeddings(path, embeds, wordlist):
+    ''' save embeddings in text file format'''
+    logging.info('Beginning to save embeddings')
+    with open(path, 'w', encoding='utf8') as f:
+        for i in range(len(wordlist)):
+            strrow = ' '.join([str(embed) for embed in embeds[i,:]])
+            f.write('{} {}\n'.format(wordlist[i], strrow))
+    logging.info('Finished saving embeddings')
 
 def load_embeddings(path):
     """

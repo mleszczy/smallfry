@@ -8,7 +8,7 @@ import numpy as np
 from smallfry import utils
 
 def compress_uniform(X, bit_rate, adaptive_range=False, stochastic_round=False,
-        skip_quantize=False):
+        skip_quantize=False, X_0=None):
     '''
     This function compresses an embedding matrix using uniform quantization.
 
@@ -31,8 +31,11 @@ def compress_uniform(X, bit_rate, adaptive_range=False, stochastic_round=False,
 
     start = time.time()
     if adaptive_range:
-        # Note that deterministic quantization is always uses for find_optimal_range.
-        range_limit = find_optimal_range(X, bit_rate, stochastic_round=False)
+        if X_0 is not None: 
+            # Note that deterministic quantization is always uses for find_optimal_range.
+            range_limit = find_optimal_range(X_0, bit_rate, stochastic_round=False)
+        else: 
+            range_limit = find_optimal_range(X, bit_rate, stochastic_round=False)
     else:
         range_limit = get_max_abs(X)
 
